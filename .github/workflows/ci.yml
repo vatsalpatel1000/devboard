@@ -24,4 +24,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ vars.DOCKERHUB_USERNAME }}/devboard-fe-master:latest
+          tags: vatsalpatel1000/devboard-fe-master:latest
