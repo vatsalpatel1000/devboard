@@ -52,9 +52,14 @@ jobs:
           username: vatsalpatel1000
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Debug Docker Username
+        run: |
+          echo "Username: vatsalpatel1000"
+
       - name: Docker Build and Push
         uses: docker/build-push-action@v7
         with:
           context: .
           push: true
           tags: vatsalpatel1000/devboard-fe-master:latest
+
