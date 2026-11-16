@@ -55,7 +55,8 @@ jobs:
       - name: Docker Build and Push
         uses: docker/build-push-action@v7
         with:
-          context: .
+          context: ./frontend
+          file: ./frontend/Dockerfile
           push: true
           tags: vatsalpatel1000/devboard-fe-master:latest
 
