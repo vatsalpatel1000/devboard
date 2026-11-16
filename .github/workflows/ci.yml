@@ -18,5 +18,8 @@ jobs:
           username: ${{ vars.DOCERHUB_USERNAME }}
           passowrd: ${{ secrets.DOCERHUB_TOKEN }}
           
-#      - name: Docker Build
-          
+      - name: Docker Build and Push
+        uses: docker/build-push-action@v7
+        with: 
+          push: true
+          tags: ${{ vars.DOCERHUB_USERNAME }}/devboard-fe-master:latest
