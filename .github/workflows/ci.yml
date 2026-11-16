@@ -49,12 +49,8 @@ jobs:
       - name: Docker Login
         uses: docker/login-action@v4
         with:
-          username: vatsalpatel1000
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Debug Docker Username
-        run: |
-          echo "Username: vatsalpatel1000"
+           username: vatsalpatel1000
+           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Docker Build and Push
         uses: docker/build-push-action@v7
