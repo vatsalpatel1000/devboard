@@ -1,18 +1,51 @@
-# Goal : Build th inmage for Devboard Frontend & Push to docker hub 
+# # Goal : Build th inmage for Devboard Frontend & Push to docker hub 
+
+# on:
+#   push:
+#     branches: [master]
+#   # paths: "*.py"                  # .py wali file se kuch push hua h to hi trigger hogi
+
+# jobs:
+#   build-and-push: 
+#     runs-on: ubuntu-latest         # github free runner
+    
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v7    # step run hone ke baad code delete ho jaega runner ke lie. isliye apn multple steps ek hi job me likhte h taki next code usi runner pr chle jo install hua h
+#                                      # agrr docker install krne ke lie alg se step bnaya to wo uss runner pr chlega hi ni. isliye multiple step ek job ke andr likhte h
+#       - name: Docker Login
+#         uses: docker/login-action@v4
+#         with:
+#           username: vatsalpatel1000
+#           password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+#       - name: Docker Build and Push
+#         uses: docker/build-push-action@v7
+#         with:
+#           context: .
+#           push: true
+#           tags: vatsalpatel1000/devboard-fe-master:latest
+
+
+
+
+
+
+name: Devboard Frontend CI
 
 on:
   push:
-    branches: [master]
-  # paths: "*.py"                  # .py wali file se kuch push hua h to hi trigger hogi
+    branches:
+      - master
 
 jobs:
-  build-and-push: 
-    runs-on: ubuntu-latest         # github free runner
-    
+  build-and-push:
+    runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
-        uses: actions/checkout@v7    # step run hone ke baad code delete ho jaega runner ke lie. isliye apn multple steps ek hi job me likhte h taki next code usi runner pr chle jo install hua h
-                                     # agrr docker install krne ke lie alg se step bnaya to wo uss runner pr chlega hi ni. isliye multiple step ek job ke andr likhte h
+        uses: actions/checkout@v4
+
       - name: Docker Login
         uses: docker/login-action@v4
         with:
