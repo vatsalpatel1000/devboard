@@ -142,7 +142,7 @@ jobs:
         working-directory: frontend
         run: npm ci
         # package-lock.json mein locked versions install honge
-        # npm ci clean aur reproducible installation karta hai - npm install ke jesa hi kaam krta h
+        # npm ci clean aur reproducible installation karta hai
 
       # Step 4: ESLint run karega
       - name: Run ESLint
@@ -158,40 +158,39 @@ jobs:
         # package.json ke test script ko execute karega
         # Vitest ke through automated tests run honge
 
+  # JOB 2: Docker image build aur push karega     Yha se Dusra runner bnega ya dusra ubuntu use krenege 
+  build-and-push:
+    needs: [Frontend]
+    # JOB 1 successful hone ke baad hi ye job execute hoga
 
+    runs-on: ubuntu-latest
+    # Github runner
 
+    steps:
+      # Step 1: Github repository ka code download karega
+      - name: Checkout
+        uses: actions/checkout@v4
 
+      # Step 2: Docker Hub mein login karega
+      - name: Docker Login
+        uses: docker/login-action@v3
+        with:
+          username: vatsalpatel1000
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          # Docker Hub token Github Secrets se lega
 
+      # Step 3: Docker image build aur push karega
+      - name: Docker Build and Push
+        uses: docker/build-push-action@v6
+        with:
+          context: ./frontend
+          # Docker build ka context frontend folder hoga
 
-    #     build-and-push:
-    #       needs: [code-lint]     
-    # runs-on: ubuntu-latest
-    # steps:
-    #   - name: Checkout
-    #     uses: actions/checkout@v4
+          file: ./frontend/Dockerfile
+          # Dockerfile ka path
 
-    #   - name: Docker Login
-    #     uses: docker/login-action@v4
-    #     with:
-    #        username: vatsalpatel1000
-    #        password: ${{ secrets.DOCKERHUB_TOKEN }}
+          push: true
+          # Build hone ke baad image Docker Hub par push hogi
 
-    #   - name: Docker Build and Push
-    #     uses: docker/build-push-action@v7
-    #     with:
-    #       context: ./frontend
-    #       file: ./frontend/Dockerfile
-    #       push: true
-    #       tags: vatsalpatel1000/devboard-fe-master:latest
-
-
-
-
-
-
-    # Backend:
-    #   steps:
-    #     - Lint
-    #     - Build
-    #     - Test
-    #     - Push
+          tags: vatsalpatel1000/devboard-fe-master:latest
+          # Docker image ka naam aur tag
