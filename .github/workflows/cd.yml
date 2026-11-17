@@ -22,7 +22,9 @@ jobs:
 
             - name: Deploy the containers with docker compose
               run: |
-                  docker-compose pull                       
-                  docker-compose up -d
-                # Docker Hub se images pull karega
+                  docker compose version
+                  docker compose pull
+                  docker compose up -d
+                # Docker Compose installation verify karega
+                # Docker Hub se latest images pull karega
                 # Containers ko background mein start karega
