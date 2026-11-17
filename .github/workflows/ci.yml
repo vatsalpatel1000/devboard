@@ -278,6 +278,8 @@ jobs:
 
 
 
-
-
+  deploy:                             # yha se aage Cd.Yml ko bhejo  
+    needs: [Frontend, build-and-push-To-DockerHub, Backend, build-and-push-DockerHub]
+    uses: ./.github/workflows/cd.yml
+    secrets: inherit
 # YHA APNA GITHUB ACTION KA CICD PIPELINE KA CI PART DONE HO GYA HAI. AB APN CD PART BNAENGE JISME APN DOCKER IMAGE KO KUBERNETES CLUSTER ME DEPLOY KRENGE.          
