@@ -110,7 +110,7 @@
 
 
 # Workflow ka naam jo GitHub Actions tab mein dikhega
-name: Devboard ALL CI
+name: Devboard CI
 
 # Ye workflow kab execute hoga?
 on:
@@ -120,6 +120,7 @@ on:
 
 # Jobs define karte hain
 jobs:
+  # JOB-1
   Frontend:
     runs-on: ubuntu-latest  # GitHub ka Ubuntu runner use hoga
 
@@ -201,7 +202,7 @@ jobs:
 
 
 
-
+  # JOB-2
   Backend:
     runs-on: ubuntu-latest  # GitHub ka Ubuntu runner use hoga
 
@@ -273,3 +274,10 @@ jobs:
 
           tags: vatsalpatel1000/devboard-be-master:latest
           # Docker image ka naam aur tag
+
+
+
+
+
+
+# YHA APNA GITHUB ACTION KA CICD PIPELINE KA CI PART DONE HO GYA HAI. AB APN CD PART BNAENGE JISME APN DOCKER IMAGE KO KUBERNETES CLUSTER ME DEPLOY KRENGE.          

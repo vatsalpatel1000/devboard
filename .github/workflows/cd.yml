@@ -1,0 +1,31 @@
+# Goal: Deploy build img from CI once CI is successful. This will be triggered on push to master branch.
+
+name: Devboard CD
+on:
+    workflow_run:
+        workflows: ["Devboard CI"]
+        types:
+            - completed
+        branches:
+            - master    
+jobs:
+    deploy:
+        runs-on: self-hosted
+        steps:
+            - name: code checkout
+              uses: actions/checkout@v7
+              
+            - name: copy example Env to main env            # Copy to .env taki runner me docker-compose.yml chl ske 
+              run: cp .env.example .env
+            
+    # Step 2: Docker Hub mein login karega
+            - name: Docker Login
+              uses: docker/login-action@v4
+              with:
+                username: vatsalpatel1000
+                password: ${{ secrets.DOCKERHUB_TOKEN }}    # Docker Hub token Github Secrets se lega
+
+            - name: Deploy the containers with docker compose
+              run: |
+                  docker-compose pull 
+                  docker-compose up -d
