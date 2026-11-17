@@ -186,11 +186,90 @@ jobs:
           context: ./frontend
           # Docker build ka context frontend folder hoga
 
-          file: ./frontend/Dockerfile
+          file: ./frontend/Dockerfile                           # Dockerfile ka name kuch or ni ho skta Github actions me DockerFile hi rhna chaiye wrna pipeline ni chlegi 
           # Dockerfile ka path
 
           push: true
           # Build hone ke baad image Docker Hub par push hogi
 
           tags: vatsalpatel1000/devboard-fe-master:latest
+          # Docker image ka naam aur tag
+
+
+
+
+
+
+
+
+  Backend:
+    runs-on: ubuntu-latest  # GitHub ka Ubuntu runner use hoga
+
+    steps:
+      # Step 1: GitHub repository ka code runner mein download karega
+      - name: Checkout Code
+        uses: actions/checkout@v7
+
+      # Step 2: Runner mein Node.js install karega
+      - name: Setup Go
+        uses: actions/setup-go@v6
+        with:
+          go-version: 1.23  # go version
+          go-version-file: 'go.mod' # Go module file for dependency management
+          cache-dependency-path: backend/go.sum         # cache dependencies identify hongi
+
+      # Step 3: Backend ki Go ki dependencies install karega
+      - name: Run Go Formatter
+        working-directory: backend
+        run: go fmt             # Dependency management ke liye go mod use hoga. go.sum file ke basis par dependencies install hongi
+
+
+      # Step 4: ESLint run karega
+      - name: Run go vetter
+        working-directory: backend
+        run: go vet
+
+
+      # Step 5: Backend tests execute karega
+      - name: Run Tests
+        working-directory: backend
+        run: go test
+        # package.json ke test script ko execute karega
+        # Vitest ke through automated tests run honge
+
+  # JOB 2: Docker image build aur push karega     Yha se Dusra runner bnega ya dusra ubuntu use krenege 
+  build-and-push-DockerHub:
+    needs: [Backend]
+    # JOB 1 successful hone ke baad hi ye job execute hoga
+
+    runs-on: ubuntu-latest
+    # Github runner
+
+    steps:
+      # Step 1: Github repository ka code download karega
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      # Step 2: Docker Hub mein login karega
+      - name: Docker Login
+        uses: docker/login-action@v7
+        with:
+          username: vatsalpatel1000
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          # Docker Hub token Github Secrets se lega
+
+      # Step 3: Docker image build aur push karega
+      - name: Docker Build and Push
+        uses: docker/build-push-action@v7
+        with:
+          context: ./backend
+          # Docker build ka context backend folder hoga
+
+          file: ./backend/Dockerfile                           # Dockerfile ka name kuch or ni ho skta Github actions me DockerFile hi rhna chaiye wrna pipeline ni chlegi 
+          # Dockerfile ka path
+
+          push: true
+          # Build hone ke baad image Docker Hub par push hogi
+
+          tags: vatsalpatel1000/devboard-be-master:latest
           # Docker image ka naam aur tag
