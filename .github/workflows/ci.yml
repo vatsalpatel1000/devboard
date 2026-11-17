@@ -14,7 +14,7 @@
 #         uses: actions/checkout@v7    # step run hone ke baad code delete ho jaega runner ke lie. isliye apn multple steps ek hi job me likhte h taki next code usi runner pr chle jo install hua h
 #                                      # agrr docker install krne ke lie alg se step bnaya to wo uss runner pr chlega hi ni. isliye multiple step ek job ke andr likhte h
 #       - name: Docker Login
-#         uses: docker/login-action@v4
+#         uses: docker/login-action@v7
 #         with:
 #           username: vatsalpatel1000
 #           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -53,11 +53,11 @@
     
 #     steps:
 #       - name: Checkout Code
-#         uses: actions/checkout@v4
+#         uses: actions/checkout@v7
 
 #       # this step will install python
 #       - name: Set up Node.js
-#         uses: actions/setup-node@v4
+#         uses: actions/setup-node@v7
 #         with:
 #           node-version: 24
 #           cache: 'npm'
@@ -77,10 +77,10 @@
 #     runs-on: ubuntu-latest
 #     steps:
 #       - name: Checkout
-#         uses: actions/checkout@v4
+#         uses: actions/checkout@v7
 
 #       - name: Docker Login
-#         uses: docker/login-action@v4
+#         uses: docker/login-action@v7
 #         with:
 #            username: vatsalpatel1000
 #            password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -126,11 +126,11 @@ jobs:
     steps:
       # Step 1: GitHub repository ka code runner mein download karega
       - name: Checkout Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       # Step 2: Runner mein Node.js install karega
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 22  # Node.js version
           cache: npm  # npm packages ka cache maintain karega
@@ -159,7 +159,7 @@ jobs:
         # Vitest ke through automated tests run honge
 
   # JOB 2: Docker image build aur push karega     Yha se Dusra runner bnega ya dusra ubuntu use krenege 
-  build-and-push:
+  build-and-push-To-DockerHub:
     needs: [Frontend]
     # JOB 1 successful hone ke baad hi ye job execute hoga
 
@@ -169,11 +169,11 @@ jobs:
     steps:
       # Step 1: Github repository ka code download karega
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       # Step 2: Docker Hub mein login karega
       - name: Docker Login
-        uses: docker/login-action@v3
+        uses: docker/login-action@v7
         with:
           username: vatsalpatel1000
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -181,7 +181,7 @@ jobs:
 
       # Step 3: Docker image build aur push karega
       - name: Docker Build and Push
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: ./frontend
           # Docker build ka context frontend folder hoga
