@@ -10,6 +10,7 @@ on:
             - master    
 jobs:
     deploy:
+        if: ${{ github.event.workflow_run.conclusion == 'success' }}        # Check if CI workflow was successful
         runs-on: self-hosted
         steps:
             - name: code checkout
