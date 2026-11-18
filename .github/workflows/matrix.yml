@@ -1,8 +1,11 @@
 name: Go Linter
 
 on:
-  workflow_dispatch:
+  schedule:
+    - cron: '55 16 * * *'                   
 
+  workflow_dispatch:                # workflow ko manually (haath se) run karne ki suvidha deta hai, bina code push kiye. 
+                                    # Github -> actions -> Workflow name (Go Linter) -> Run workflow
 jobs:
     code-format:
         runs-on: ubuntu-latest

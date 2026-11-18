@@ -279,7 +279,7 @@ jobs:
 
 
 # frontend & backend dono ke liye docker image build aur push karega - 
-  build-and-push:               
+  build-and-push:                       # ye fronend & backend dono ke liye docker image build aur push karega - ye job dono ke liye run hoga loop me              
     needs: [Frontend, Backend ]
     runs-on: ubuntu-latest
     # Github runner
