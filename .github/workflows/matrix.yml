@@ -6,11 +6,12 @@ on:
     #     DOCKERHUB_USER: ${{ vars.secrets.DOCKER_USERNAME }}    # github ki cid pipeline me jo apne dockerhub username hai usko use krskte h yha variable declare krke
 
   workflow_call:                    # aage se aane wali workflow ko call karega or uske sath jud jaega
+
   schedule:                         # Cronjob ke liye schedule set karega
     - cron: '*/5 * * * *'                   
 
   workflow_dispatch:                # workflow ko manually (haath se) run karne ki suvidha deta hai, bina code push kiye. 
-                                    # Github -> actions -> Workflow name (Go Linter) -> Run workflow
+                                    # Github -> actions -> Workflow name (Go Linter) -> Run workflow -Button active ho jaega
 jobs:
     code-format:
         runs-on: ubuntu-latest
