@@ -306,20 +306,26 @@ jobs:
       - name: Docker Build and Push
         uses: docker/build-push-action@v4
         with:
-          context: ./${{ matrix.folder }}
-          # Docker build ka context backend folder hoga
+          context: ./${{ matrix.service == 'Frontend' && 'frontend' || 'backend' }}
+          # Docker build ka context frontend ya backend folder hoga
+          # Matrix ke according frontend ya backend folder build context hoga
 
-          file: ./backend/Dockerfile                           # Dockerfile ka name kuch or ni ho skta Github actions me DockerFile hi rhna chaiye wrna pipeline ni chlegi 
-          # Dockerfile ka path
+          file:    ./${{ matrix.service == 'Frontend' && 'frontend' || 'backend' }}/Dockerfile
+          # Dockerfile ka name kuch or ni ho skta Github actions me DockerFile hi rhna chaiye wrna pipeline ni chlegi 
+          # Dockerfile ka path         # Matrix ke according respective Dockerfile use hoga
 
           push: true
           # Build hone ke baad image Docker Hub par push hogi
 
-          tags: vatsalpatel1000/devboard-${{ matrix.folder }}:latest
-          # Docker image ka naam aur tag        
+          tags:   vatsalpatel1000/devboard-${{ matrix.service == 'Frontend' && 'fe' || 'be' }}-master:latest
+          # Docker image ka naam aur tag    
+          # Frontend: vatsalpatel1000/devboard-fe-master:latest
+          # Backend: vatsalpatel1000/devboard-be-master:latest    
 
       
             
+      context: ./frontend
+      file: ./frontend/Dockerfile  
   
   deploy:                             # yha se aage Cd.Yml ko bhejo  
     needs: [Frontend, Backend, build-and-push]
