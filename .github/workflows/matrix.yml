@@ -7,7 +7,7 @@ on:
 
   workflow_call:                    # aage se aane wali workflow ko call karega or uske sath jud jaega
   schedule:                         # Cronjob ke liye schedule set karega
-    - cron: '* * * * *'                   
+    - cron: '*/5 * * * *'                   
 
   workflow_dispatch:                # workflow ko manually (haath se) run karne ki suvidha deta hai, bina code push kiye. 
                                     # Github -> actions -> Workflow name (Go Linter) -> Run workflow
