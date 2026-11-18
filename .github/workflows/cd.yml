@@ -27,4 +27,4 @@ jobs:
                   docker compose up -d
                 # Docker Compose installation verify karega
                 # Docker Hub se latest images pull karega
-                # Containers ko background mein start karega
+                # Containers ko background mein start karegaa
