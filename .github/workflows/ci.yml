@@ -159,42 +159,43 @@ jobs:
         # package.json ke test script ko execute karega
         # Vitest ke through automated tests run honge
 
-  # JOB 2: Docker image build aur push karega     Yha se Dusra runner bnega ya dusra ubuntu use krenege 
-  build-and-push-To-DockerHub:
-    needs: [Frontend]
-    # JOB 1 successful hone ke baad hi ye job execute hoga
+  # # JOB 2: Docker image build aur push karega     Yha se Dusra runner bnega ya dusra ubuntu use krenege 
+  # # isko replace krenge lint wale buil-push ke sath jo ki frontend aur backend dono ke liye docker image build aur push karega
+  # build-and-push-To-DockerHub:
+  #   needs: [Frontend]
+  #   # JOB 1 successful hone ke baad hi ye job execute hoga
 
-    runs-on: ubuntu-latest
-    # Github runner
+  #   runs-on: ubuntu-latest
+  #   # Github runner
 
-    steps:
-      # Step 1: Github repository ka code download karega
-      - name: Checkout
-        uses: actions/checkout@v4
+  #   steps:
+  #     # Step 1: Github repository ka code download karega
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
 
-      # Step 2: Docker Hub mein login karega
-      - name: Docker Login
-        uses: docker/login-action@v4
-        with:
-          username: vatsalpatel1000
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-          # Docker Hub token Github Secrets se lega
+  #     # Step 2: Docker Hub mein login karega
+  #     - name: Docker Login
+  #       uses: docker/login-action@v4
+  #       with:
+  #         username: vatsalpatel1000
+  #         password: ${{ secrets.DOCKERHUB_TOKEN }}
+  #         # Docker Hub token Github Secrets se lega
 
-      # Step 3: Docker image build aur push karega
-      - name: Docker Build and Push
-        uses: docker/build-push-action@v4
-        with:
-          context: ./frontend
-          # Docker build ka context frontend folder hoga
+  #     # Step 3: Docker image build aur push karega
+  #     - name: Docker Build and Push
+  #       uses: docker/build-push-action@v4
+  #       with:
+  #         context: ./frontend
+  #         # Docker build ka context frontend folder hoga
 
-          file: ./frontend/Dockerfile                           # Dockerfile ka name kuch or ni ho skta Github actions me DockerFile hi rhna chaiye wrna pipeline ni chlegi 
-          # Dockerfile ka path
+  #         file: ./frontend/Dockerfile                           # Dockerfile ka name kuch or ni ho skta Github actions me DockerFile hi rhna chaiye wrna pipeline ni chlegi 
+  #         # Dockerfile ka path
 
-          push: true
-          # Build hone ke baad image Docker Hub par push hogi
+  #         push: true
+  #         # Build hone ke baad image Docker Hub par push hogi
 
-          tags: vatsalpatel1000/devboard-fe-master:latest
-          # Docker image ka naam aur tag
+  #         tags: vatsalpatel1000/devboard-fe-master:latest
+  #         # Docker image ka naam aur tag
 
 
 
@@ -238,14 +239,56 @@ jobs:
         # package.json ke test script ko execute karega
         # Vitest ke through automated tests run honge
 
-  # JOB 2: Docker image build aur push karega     Yha se Dusra runner bnega ya dusra ubuntu use krenege 
-  build-and-push-DockerHub:
-    needs: [Backend]
-    # JOB 1 successful hone ke baad hi ye job execute hoga
+  # # JOB 2: Docker image build aur push karega     Yha se Dusra runner bnega ya dusra ubuntu use krenege 
+  # # isko replace krenge lint wale buil-push ke sath jo ki frontend aur backend dono ke liye docker image build aur push karega
+  # build-and-push-DockerHub:
+  #   needs: [Backend]
+  #   # JOB 1 successful hone ke baad hi ye job execute hoga
 
+  #   runs-on: ubuntu-latest
+  #   # Github runner
+
+  #   steps:
+  #     # Step 1: Github repository ka code download karega
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
+
+  #     # Step 2: Docker Hub mein login karega
+  #     - name: Docker Login
+  #       uses: docker/login-action@v4
+  #       with:
+  #         username: vatsalpatel1000
+  #         password: ${{ secrets.DOCKERHUB_TOKEN }}
+  #         # Docker Hub token Github Secrets se lega
+
+  #     # Step 3: Docker image build aur push karega
+  #     - name: Docker Build and Push
+  #       uses: docker/build-push-action@v4
+  #       with:
+  #         context: ./backend
+  #         # Docker build ka context backend folder hoga
+
+  #         file: ./backend/Dockerfile                           # Dockerfile ka name kuch or ni ho skta Github actions me DockerFile hi rhna chaiye wrna pipeline ni chlegi 
+  #         # Dockerfile ka path
+
+  #         push: true
+  #         # Build hone ke baad image Docker Hub par push hogi
+
+  #         tags: vatsalpatel1000/devboard-be-master:latest
+  #         # Docker image ka naam aur tag
+
+
+# frontend & backend dono ke liye docker image build aur push karega - 
+  build-and-push:               
+    needs: [Frontend, Backend ]
     runs-on: ubuntu-latest
     # Github runner
 
+    strategy:
+      fail-fast: false
+      matrix:
+        service: [Frontend, Backend]
+        # Ye matrix define karta hai ki ye job dono services ke liye run hoga - build-and-push-To-DockerHub aur build-and-push-DockerHub dono ko comment kr skte h -= dono ka same work h
     steps:
       # Step 1: Github repository ka code download karega
       - name: Checkout
@@ -263,7 +306,7 @@ jobs:
       - name: Docker Build and Push
         uses: docker/build-push-action@v4
         with:
-          context: ./backend
+          context: ./${{ matrix.folder }}
           # Docker build ka context backend folder hoga
 
           file: ./backend/Dockerfile                           # Dockerfile ka name kuch or ni ho skta Github actions me DockerFile hi rhna chaiye wrna pipeline ni chlegi 
@@ -272,14 +315,14 @@ jobs:
           push: true
           # Build hone ke baad image Docker Hub par push hogi
 
-          tags: vatsalpatel1000/devboard-be-master:latest
-          # Docker image ka naam aur tag
+          tags: vatsalpatel1000/devboard-${{ matrix.folder }}:latest
+          # Docker image ka naam aur tag        
 
-
-
-
+      
+            
+  
   deploy:                             # yha se aage Cd.Yml ko bhejo  
-    needs: [Frontend, build-and-push-To-DockerHub, Backend, build-and-push-DockerHub]
-    uses: ./.github/workflows/cd.yml
+    needs: [Frontend, Backend, build-and-push]
+    uses: ./.github/workflows/cd.yml              # yha se aage isko connect kro - secrets ke sath
     secrets: inherit
 # YHA APNA GITHUB ACTION KA CICD PIPELINE KA CI PART DONE HO GYA HAI. AB APN CD PART BNAENGE JISME APN DOCKER IMAGE KO KUBERNETES CLUSTER ME DEPLOY KRENGE.          
