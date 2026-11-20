@@ -1,7 +1,8 @@
+# Goal: I have to do SAST	- Static Application Security Test    For my Code    
 name: Code Quality
 
 on:
-    workflow_call:
+    workflow_call:                      # kisi or running workflow ke bich me se call kr skta h isko, iska address de ke 
 
 jobs:
     sast:

@@ -1,3 +1,5 @@
+# Goal: Run End to end DevsecOps Pipeline for my project. This workflow will run all the security checks, code quality checks, and push the docker images to the registry.
+
 name: DevSecOps
 
 on:
@@ -22,7 +24,7 @@ jobs:
       - id: t
         run: echo "tag=sha-${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
 
-  code-quality:
+  code-quality:                                       # code-quality workflow ko call krne ke liye ye likha h
     uses: ./.github/workflows/code-quality.yml
   secret-scanning:
     uses: ./.github/workflows/secret-scanning.yml

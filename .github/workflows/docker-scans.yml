@@ -1,3 +1,4 @@
+# Goal: Ensure docekr file & docker image r security Tested   
 name: Docker Scan
 
 on: 

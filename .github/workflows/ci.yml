@@ -114,9 +114,10 @@ name: Devboard CI
 
 # Ye workflow kab execute hoga?
 on:
-  push:
-    branches:
-      - master  # Sirf master branch par push hone par run hoga
+  workflow_dispatch:  # Ye workflow manually trigger ho sakta hai GitHub Actions tab se
+  # push:
+  #   branches:
+  #     - master  # Sirf master branch par push hone par run hoga
 
 # Jobs define karte hain
 jobs:

@@ -1,3 +1,4 @@
+# Goal: I Have to ensure th pckg & Dependencies have been audited for Security Vulnerabilities. This workflow will scan the codebase for any security vulnerabilities in the dependencies using Govulncheck, npm audit, and pip-audit.
 name: Dependency scan
 
 on:

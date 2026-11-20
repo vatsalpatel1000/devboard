@@ -1,3 +1,5 @@
+# GOal: to chek whether th app code coverage doesnt have security threats/issues.
+
 name: Sonar Scan
 
 on:
