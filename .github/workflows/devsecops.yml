@@ -4,7 +4,7 @@ name: DevSecOps
 
 on:
   push:
-    branches: [mega-project]
+    branches: [master]
   #   paths:
   #     - 'backend/**'
   #     - 'frontend/**'
