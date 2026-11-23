@@ -3,7 +3,7 @@
 name: Devboard CD
 on:
     # workflow_dispatch:                                # Ye workflow manually trigger ho sakta hai GitHub Actions tab se
-     workflow_call                                   # aage se aane wali workflow ko call karega or uske sath jud jaega   
+     workflow_call                                      # aage se aane wali workflow ko call karega or uske sath jud jaega   
 jobs:
     deploy:
         runs-on: self-hosted                             # CD ko hmesha self hosted pr chlao
