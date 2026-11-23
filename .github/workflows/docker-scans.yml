@@ -31,9 +31,11 @@ jobs:
                 username: vatsalpatel1000
                 password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-            # - name: Docker Build ${{ matrix.folders}}
-            #   run: docker build -t devboard-${{ matrix.folders }}:ci .
-            #   working-directory: ${{ matrix.folders}}
+# Docker Image build krne ke lie docker build command use kiya h, jisse docker file se image banegi aur scan ke lie ready hogi  
+# image ko build krenge phle run krenge runner pr hi fir push krenge HUB pr.               
+            - name: Docker Build ${{ matrix.folders}}
+              run: docker build -t vatsalpatel1000/devboard-${{ matrix.folders }}:ci .
+              working-directory: ${{ matrix.folders}}
 
             # # Make the auto-detected instrumentation set reviewable: bootstrap resolves
             # # packages at build time, so record what this build actually contains.
@@ -51,14 +53,17 @@ jobs:
             #     name: otel-bootstrap-requirements
             #     path: reports/otel-bootstrap-requirements.txt
 
-            # - name: Run Trivy vulnerability scanner                     # add Trivy Action to scan vulnerabilities in the docker image and generate a report
-            #   uses: aquasecurity/trivy-action@v0.36.0
-            #   continue-on-error: true
-            #   with:
-            #     image-ref: devboard-${{ matrix.folders }}:ci
-            #     format: 'table'
-            #     exit-code: '1'                                          # mtlb stop hua to 1 aagega returen me
-            #     ignore-unfixed: true
-            #     vuln-type: 'os,library'
-            #     severity: 'CRITICAL'
+
+# search on browser -  trivy action github - Docs se code copy kro ye wala 
+# Docker Image scan krne ke lie, add krenge. Trivy Action to scan vulnerabilities in the docker image and generate a report
+            - name: Run Trivy vulnerability scanner                   
+              uses: aquasecurity/trivy-action@v0.36.0
+              continue-on-error: true
+              with:
+                image-ref: vatsalpatel1000/devboard-${{ matrix.folders }}:ci .               # docker repo me build ki hui image ko trivy uthaega or usko scan krega
+                format: 'table'
+                exit-code: '1'                       # Agr severity: 'CRITICAL Ya HIGH' hui to stop hoga. to fir return me 1 aagega.
+                ignore-unfixed: true
+                vuln-type: 'os,library'
+                severity: 'CRITICAL,HIGH'
              
