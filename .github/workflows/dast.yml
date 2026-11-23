@@ -1,13 +1,15 @@
 #Goal: To ensure my running application is free from OWASP Top 10 security issues. 
+# # search on browser -  OWASP ZAP Github Actions - Docs se code copy kro ye wala 
 name: OWASP ZAP DAST Scan
 
 on:
-  workflow_dispatch:
-    inputs:
-      target_url:
-        description: URL to scan (e.g. http://<nlb-hostname>/)
-        required: true
-        type: string
+  workflow_call:
+#     inputs:
+#       target_url:
+# #        description: URL to scan (e.g. http://<nlb-hostname>/)
+#         description: http://65.0.105.112:8080/
+#         required: true
+#         type: string
 
 jobs:
   scan:
@@ -20,6 +22,6 @@ jobs:
         uses: zaproxy/action-baseline@v0.15.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          target: ${{ inputs.target_url }}
+          target: 'http://${{ secrets.EC2_HOST }}:8080'
           fail_action: false
           allow_issue_writing: false
