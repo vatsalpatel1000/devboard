@@ -1,4 +1,4 @@
-# GOal: to chek whether th app code coverage doesnt have security threats/issues..
+# GOal: to chek whether th app code coverage doesnt have security threats/issues.
 
 name: Sonar Scan
 
@@ -9,14 +9,20 @@ jobs:
     sonar-scanner:
         runs-on: ubuntu-latest
         steps:
+
+
+
+        
             - name: Code Checkout
               uses: actions/checkout@v7
               with:
-                fetch-depth: 0
+                fetch-depth: 0                          # 0 means 
 
-            - name: SonarCloud Scan
+
+# Search on browser - Github action Sonar - Docs se code copy kro ye wala   
+            - name: SonarQube Scan
               continue-on-error: true
               uses: SonarSource/sonarqube-scan-action@v8.4.0
               env:
-                SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-                SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+                SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
+                SONAR_HOST_URL: ${{ secrets.SONARQUBE_URL }}
