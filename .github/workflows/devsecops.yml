@@ -25,11 +25,11 @@ jobs:
   #       run: echo "tag=sha-${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
 
   code-quality:                                       # code-quality workflow ko call krne ke liye ye likha h
-    uses: ./.github/workflows/code-quality.yml
+    uses: ./.github/workflows/code-quality.yml        
   secret-scanning:
-    uses: ./.github/workflows/secret-scanning.yml     # 
+    uses: ./.github/workflows/secret-scanning.yml     # isme pipeline ke secrest scan krega ki khi sensitive info leak to ni hui
   dependency-checks:
-    uses: ./.github/workflows/dependency-scan.yml
+    uses: ./.github/workflows/dependency-scan.yml     # isme language ki dependency package ko scan krega
   # docker-checks:
   #   uses: ./.github/workflows/docker-scans.yml
   #   secrets: inherit

@@ -28,6 +28,7 @@ jobs:
               run: |                                                       # multple commands chlane ke lie | ( pipe ) ka use kia jata h. 
                 go install golang.org/x/vuln/cmd/govulncheck@v1.1.4
                 (cd backend && govulncheck ./...) | tee reports/backend-govulncheck.txt
+              working-directory: backend  
 
                
             - name: Setup Node                                              # nodejs ke liye setup install karega
@@ -43,6 +44,9 @@ jobs:
             - name: npm audit                                               # Node ki dependency me vulnerability check karega ki dependency me koi bug to nhi h na
               continue-on-error: true
               run: (cd frontend && npm audit) | tee reports/frontend-npm-audit.txt
+              working-directory: frontend
+
+
 
             - name: Setup Python                                          # Install Python on workflow
               uses: actions/setup-python@v7
@@ -58,10 +62,12 @@ jobs:
                 pip install --require-hashes --only-binary :all: -r ai-service/requirements-dev.lock
                 pip-audit --require-hashes -r ai-service/requirements.lock | tee reports/ai-pip-audit.txt
 
-            - name: Upload Reports
+
+# search on browser   Add Github action job reports to artifacts - Docs se code copy kro ye wala                
+            - name: Upload Reports                      # artifacts me reports upload karega taki workflow ke run hone ke baad bhi reports ko access kiya ja sake
               if: always()                              # agr test fail hua to bi reports upload hongi
               uses: actions/upload-artifact@v4
               with:
-                name: dependency-scan-report
-                path: reports/
-                retention-days: 5
+                name: dependency-scan-report            # report ka name
+                path: reports/                          # path jaha report save h
+                retention-days: 5                       # 5 din tkk artifacts ko access kiya ja skta h, 5 din ke baad ye delete ho jayega
