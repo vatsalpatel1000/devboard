@@ -20,7 +20,7 @@ jobs:
 
 
 # Search on browser - Github action Sonar - Docs se code copy kro ye wala   
-            - name: SonarQube Scan
+            - name: SonarQube  Scan
               continue-on-error: true
               uses: SonarSource/sonarqube-scan-action@v8.4.0
               env:

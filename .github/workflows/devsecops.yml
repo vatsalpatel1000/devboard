@@ -34,18 +34,18 @@ jobs:
     uses: ./.github/workflows/docker-scans.yml        # isme docker image ko scan krega ki kahi vulnerability, bugs to ni h
     secrets: inherit                                  # iss workflow me github ka secrets pass krne ke lie 
   sonar-qube:
-    uses: ./.github/workflows/sonar-scan.yml          # isme 
+    uses: ./.github/workflows/sonar-scan.yml          # isme project ko sonar apne rule ke according sca krega
     secrets: inherit
-  # code-tests:
-  #   uses: ./.github/workflows/code-tests.yml
+  code-tests:                                         # isme code test honge frontend backend ke 
+    uses: ./.github/workflows/code-tests.yml
 
-  # docker-push:
-  #   if: github.event_name != 'pull_request'
-  #   needs: [prep, code-quality, code-tests, sonar-qube, docker-checks, dependency-checks, secret-scanning]
-  #   uses: ./.github/workflows/docker-push.yml
-  #   with:
-  #     image_tag: ${{ needs.prep.outputs.tag }}
-  #   secrets: inherit
+  docker-push:                                        # isme docker pr code push hoga
+    if: github.event_name != 'pull_request'
+    needs: [ code-quality, code-tests, sonar-qube, docker-checks, dependency-checks, secret-scanning]
+    uses: ./.github/workflows/docker-push.yml
+    # with:
+    #   image_tag: ${{ needs.prep.outputs.tag }}
+    secrets: inherit
 
   # gitops-bump:
   #   if: github.event_name != 'pull_request'
