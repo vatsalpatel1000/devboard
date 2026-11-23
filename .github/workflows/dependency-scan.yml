@@ -1,6 +1,7 @@
 # Goal: I Have to ensure the pckg & Dependencies have been audited for Security Vulnerabilities. ki pckg me koi error bug to nhi h na.
 # This workflow will scan the codebase for any security vulnerabilities in the dependencies using Govulncheck, npm audit, and pip-audit.
 name: Dependency scan
+# package update krne ke lie "npm audit use " command use kro 
 
 on:
     workflow_call:
@@ -23,8 +24,8 @@ jobs:
 
 # search on browser   how to do dependency scan for GO lang - Docs se code copy kro ye wala  
 # Go ke dependency me vulnerability, error check karega ki dependency me koi bug to nhi h na aur report ko save karega reports/backend-govulncheck.txt me                
-            - name: Govulncheck                                            # GO ki Dependency vulnerability check karega ki dependency me koi bug to nhi h na 
-              continue-on-error: true                                      # aur report ko save karega reports/backend-govulncheck.txt me
+            - name: Govulncheck                                            # GO ki Dependency vulnerability check karega ki dependency me koi bug to nhi h na   # aur report ko save karega reports/backend-govulncheck.txt me
+              continue-on-error: true                                      # agr error aaya to bi workflow ko fail ni karega, aur report ko save karega reports/backend-govulncheck.txt me
               run: |                                                       # multple commands chlane ke lie | ( pipe ) ka use kia jata h. 
                 go install golang.org/x/vuln/cmd/govulncheck@v1.1.4
                 (cd backend && govulncheck ./...) | tee reports/backend-govulncheck.txt
@@ -42,7 +43,7 @@ jobs:
 # search on browser   how to do dependency scan for Node.js lang - Docs se code copy kro ye wala   
 # Node ke dependency me vulnerability, error check karega ki dependency me koi bug to nhi h na aur report ko save karega reports/frontend-npm-audit.txt me                                
             - name: npm audit                                               # Node ki dependency me vulnerability check karega ki dependency me koi bug to nhi h na
-              continue-on-error: true
+              continue-on-error: true                                       # fail hone pr bi workflow ko fail ni karega, aur report ko save karega reports/frontend-npm-audit.txt me
               run: (cd frontend && npm audit) | tee reports/frontend-npm-audit.txt
               working-directory: frontend
 

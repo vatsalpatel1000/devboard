@@ -30,9 +30,9 @@ jobs:
     uses: ./.github/workflows/secret-scanning.yml     # isme pipeline ke secrest scan krega ki khi sensitive info leak to ni hui
   dependency-checks:
     uses: ./.github/workflows/dependency-scan.yml     # isme language ki dependency package ko scan krega
-  # docker-checks:
-  #   uses: ./.github/workflows/docker-scans.yml
-  #   secrets: inherit
+  docker-checks:
+    uses: ./.github/workflows/docker-scans.yml        # isme docker image ko scan krega ki kahi vulnerability, bugs to ni h
+    secrets: inherit
   # sonar-qube:
   #   uses: ./.github/workflows/sonar-scan.yml
   #   secrets: inherit

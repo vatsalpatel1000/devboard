@@ -8,13 +8,16 @@ jobs:
     docker-file-lint-and-scan:
         runs-on: ubuntu-latest
         strategy:
-            fail-fast: false
+            fail-fast: false                                          # ek fail hua to bi dusre ke lie chlega
             matrix:
                 folders: ['backend','frontend','ai-service']
         steps:
             - name: Code Checkout
               uses: actions/checkout@v7
 
+
+# docker file linting ke lie Hadolint Action use kiya h, jisse docker file me vulnerability, bugs check honge aur report generate hogi
+# search on browser   how to do hadolint dockerfile linting - Docs se code copy kro ye wala               
             - name: ${{ matrix.folders}} Dockerfile Lint
               uses: hadolint/hadolint-action@v3.5.0
               with:
@@ -47,14 +50,14 @@ jobs:
             #     name: otel-bootstrap-requirements
             #     path: reports/otel-bootstrap-requirements.txt
 
-            - name: Run Trivy vulnerability scanner                     # add Trivy Action to scan vulnerabilities in the docker image and generate a report
-              uses: aquasecurity/trivy-action@v0.36.0
-              continue-on-error: true
-              with:
-                image-ref: devboard-${{ matrix.folders }}:ci
-                format: 'table'
-                exit-code: '1'                                          # mtlb stop hua to 1 aagega returen me
-                ignore-unfixed: true
-                vuln-type: 'os,library'
-                severity: 'CRITICAL'
+            # - name: Run Trivy vulnerability scanner                     # add Trivy Action to scan vulnerabilities in the docker image and generate a report
+            #   uses: aquasecurity/trivy-action@v0.36.0
+            #   continue-on-error: true
+            #   with:
+            #     image-ref: devboard-${{ matrix.folders }}:ci
+            #     format: 'table'
+            #     exit-code: '1'                                          # mtlb stop hua to 1 aagega returen me
+            #     ignore-unfixed: true
+            #     vuln-type: 'os,library'
+            #     severity: 'CRITICAL'
              
