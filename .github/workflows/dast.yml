@@ -25,3 +25,17 @@ jobs:
           target: 'http://${{ secrets.EC2_HOST }}:8080'
           fail_action: false
           allow_issue_writing: false
+
+
+
+
+
+# search on browser   Add Github action job reports save to artifacts - Docs se code copy kro ye wala                
+      - name: Upload Reports                      # artifacts me reports upload karega taki workflow ke run hone ke baad bhi reports ko access kiya ja sake
+        if: always()                              # agr test fail hua to bi reports upload hongi
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependency-scan-report            # report ka name
+          path: reports/                          # path jaha report save h
+          retention-days: 5                       # 5 din tkk artifacts ko access kiya ja skta h, 5 din ke baad ye delete ho jayega
+
