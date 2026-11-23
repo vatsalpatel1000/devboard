@@ -43,5 +43,5 @@ jobs:
           #   VITE_OTEL_ENVIRONMENT=prod
           #   VITE_APP_VERSION=${{ inputs.image_tag }}
           tags: |
-            $vatsalpatel1000/devboard-${{ matrix.folders }}:${{ inputs.image_tag }}
+                 vatsalpatel1000/devboard-${{ matrix.folders }}:${{ inputs.image_tag }}
           #  ${{ vars.DOCKERHUB_USERNAME }}/devboard-${{ matrix.folders }}:latest

@@ -44,7 +44,8 @@ jobs:
     needs: [ code-quality, code-tests, sonar-qube, docker-checks, dependency-checks, secret-scanning]
     uses: ./.github/workflows/docker-push.yml
     with:
-      image_tag: ${{ needs.prep.outputs.tag }}
+      image_tag: sha-${{ github.sha }}
+#      image_tag: ${{ needs.prep.outputs.tag }}      
     secrets: inherit
 
   # gitops-bump:
