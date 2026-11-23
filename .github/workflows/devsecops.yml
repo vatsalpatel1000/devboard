@@ -43,8 +43,8 @@ jobs:
     if: github.event_name != 'pull_request'
     needs: [ code-quality, code-tests, sonar-qube, docker-checks, dependency-checks, secret-scanning]
     uses: ./.github/workflows/docker-push.yml
-    # with:
-    #   image_tag: ${{ needs.prep.outputs.tag }}
+    with:
+      image_tag: ${{ needs.prep.outputs.tag }}
     secrets: inherit
 
   # gitops-bump:
