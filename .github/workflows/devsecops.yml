@@ -32,10 +32,10 @@ jobs:
     uses: ./.github/workflows/dependency-scan.yml     # isme language ki dependency package ko scan krega
   docker-checks:
     uses: ./.github/workflows/docker-scans.yml        # isme docker image ko scan krega ki kahi vulnerability, bugs to ni h
+    secrets: inherit                                  # iss workflow me github ka secrets pass krne ke lie 
+  sonar-qube:
+    uses: ./.github/workflows/sonar-scan.yml          # isme 
     secrets: inherit
-  # sonar-qube:
-  #   uses: ./.github/workflows/sonar-scan.yml
-  #   secrets: inherit
   # code-tests:
   #   uses: ./.github/workflows/code-tests.yml
 
