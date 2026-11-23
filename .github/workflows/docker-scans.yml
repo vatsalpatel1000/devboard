@@ -67,3 +67,8 @@ jobs:
                 vuln-type: 'os,library'
                 severity: 'CRITICAL,HIGH'
              
+# Agr workflow me Docker file se related koi issue aae to usko Docker Gorden AI se new docker file bnawa skte h. Docker desktop me dockerfile ka code de ke ki ye issue aara h fir ai se fix krwa skt h 
+# YA fir - terminal pr folder me ja ke 'docker ai' run kr ke - dockerfile ko theek krne ko bol skte h gorden ai ko. 
+
+# multistage img vs distroless image kya hotah  ?       multistage me upr wale stage se nichey wale stasge me copy kr deti h , distroless is best use case for multistage image 
+# dhi = docker ka khud ka distroless img    - isme kuch install nhi kr skte sirf process chla skte ho.
