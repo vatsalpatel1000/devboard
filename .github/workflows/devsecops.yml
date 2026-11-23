@@ -24,7 +24,7 @@ jobs:
   #     - id: t
   #       run: echo "tag=sha-${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
 
-  code-quality:                                       # code-quality workflow ko call krne ke liye ye likha h
+  code-quality:                                       # code-quality workflow ko call krne ke liye ye likha h.
     uses: ./.github/workflows/code-quality.yml        
   secret-scanning:
     uses: ./.github/workflows/secret-scanning.yml     # isme pipeline ke secrest scan krega ki khi sensitive info leak to ni hui
