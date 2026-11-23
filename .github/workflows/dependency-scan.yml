@@ -1,4 +1,5 @@
-# Goal: I Have to ensure th pckg & Dependencies have been audited for Security Vulnerabilities. This workflow will scan the codebase for any security vulnerabilities in the dependencies using Govulncheck, npm audit, and pip-audit.
+# Goal: I Have to ensure the pckg & Dependencies have been audited for Security Vulnerabilities. ki pckg me koi error bug to nhi h na.
+# This workflow will scan the codebase for any security vulnerabilities in the dependencies using Govulncheck, npm audit, and pip-audit.
 name: Dependency scan
 
 on:
@@ -14,34 +15,43 @@ jobs:
             - name: Make reports dir                                      # Reports directory banayega jisme scan reports save honge
               run: mkdir -p reports
 
-            - name: Setup Go                                              # Install GO
+            - name: Setup Go                                              # Install GO on workflow
               uses: actions/setup-go@v6
               with:
                 go-version-file: backend/go.mod
                 cache-dependency-path: backend/go.sum
 
+# search on browser   how to do dependency scan for GO lang - Docs se code copy kro ye wala  
+# Go ke dependency me vulnerability, error check karega ki dependency me koi bug to nhi h na aur report ko save karega reports/backend-govulncheck.txt me                
             - name: Govulncheck                                            # GO ki Dependency vulnerability check karega ki dependency me koi bug to nhi h na 
               continue-on-error: true                                      # aur report ko save karega reports/backend-govulncheck.txt me
-              run: |
+              run: |                                                       # multple commands chlane ke lie | ( pipe ) ka use kia jata h. 
                 go install golang.org/x/vuln/cmd/govulncheck@v1.1.4
                 (cd backend && govulncheck ./...) | tee reports/backend-govulncheck.txt
 
-            - name: Setup Node                                              # nodejs ke liye setup karega
+               
+            - name: Setup Node                                              # nodejs ke liye setup install karega
               uses: actions/setup-node@v6
               with:
                 node-version: '20'
                 cache: npm
                 cache-dependency-path: frontend/package-lock.json
 
+
+# search on browser   how to do dependency scan for Node.js lang - Docs se code copy kro ye wala   
+# Node ke dependency me vulnerability, error check karega ki dependency me koi bug to nhi h na aur report ko save karega reports/frontend-npm-audit.txt me                                
             - name: npm audit                                               # Node ki dependency me vulnerability check karega ki dependency me koi bug to nhi h na
               continue-on-error: true
               run: (cd frontend && npm audit) | tee reports/frontend-npm-audit.txt
 
-            - name: Setup Python
+            - name: Setup Python                                          # Install Python on workflow
               uses: actions/setup-python@v7
               with:
                 python-version: '3.13'
 
+
+# search on browser   how to do dependency scan for Python lang - Docs se code copy kro ye wala
+# Python ke dependency me vulnerability, error check karega ki dependency me koi bug to nhi h na aur report ko save karega reports/ai-pip-audit.txt                                           
             - name: pip-audit
               continue-on-error: true
               run: |
