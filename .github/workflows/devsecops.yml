@@ -24,6 +24,8 @@ jobs:
   #     - id: t
   #       run: echo "tag=sha-${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
 
+
+#  ---------- CI ---------- 
   code-quality:                                       # code-quality workflow ko call krne ke liye ye likha h.
     uses: ./.github/workflows/code-quality.yml        
   secret-scanning:
@@ -56,3 +58,12 @@ jobs:
   #   uses: ./.github/workflows/gitops-bump.yml
   #   with:
   #     image_tag: ${{ needs.prep.outputs.tag }}
+
+
+  
+#  ---------- CD ---------- 
+  deploy:
+    needs: [ docker-push ]
+    uses: ./.github/workflows/deploy.yml                                         
+    secrets: inherit
+
