@@ -23,16 +23,16 @@ jobs:
               with:
                 dockerfile: ${{ matrix.folders}}/Dockerfile
               
-            - name: Docker Hardened Images [Login]
-              uses: docker/login-action@v4
-              with:
-                registry: dhi.io
-                username: ${{ vars.DOCKERHUB_USERNAME }}
-                password: ${{ secrets.DOCKERHUB_TOKEN }}
+            # - name: Docker Hardened Images [Login]
+            #   uses: docker/login-action@v4
+            #   with:
+            #     registry: dhi.io
+            #     username: ${{ vars.DOCKERHUB_USERNAME }}
+            #     password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-            - name: Docker Build ${{ matrix.folders}}
-              run: docker build -t devboard-${{ matrix.folders }}:ci .
-              working-directory: ${{ matrix.folders}}
+            # - name: Docker Build ${{ matrix.folders}}
+            #   run: docker build -t devboard-${{ matrix.folders }}:ci .
+            #   working-directory: ${{ matrix.folders}}
 
             # # Make the auto-detected instrumentation set reviewable: bootstrap resolves
             # # packages at build time, so record what this build actually contains.
